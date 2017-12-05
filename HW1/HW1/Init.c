@@ -5,5 +5,6 @@
 
 void Init(void) {
 	// Create ready Queue and Waiting Queue
-	// Initialize thread sheduler
+	InitReadyQ();
+	InitWaitQ();
 }
