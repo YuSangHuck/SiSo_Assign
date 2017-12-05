@@ -3,15 +3,24 @@
 #include "Scheduler.h"
 #include "Queue.h"
 #include <stdlib.h>
+#include <string.h>
 
 void InitReadyQ(){
 	Thread* ReadyQHead = NULL;
 	Thread*	ReadyQTail = NULL;
+    ReadyQHead->pPrev = NULL;
+    ReadyQHead->pNext = NULL;
+    ReadyQTail->pPrev = NULL;
+    ReadyQTail->pNext = NULL;
 }
 
 void InitWaitQ(){
 	Thread* WaitQHead = NULL;
 	Thread*	WaitQTail = NULL;
+    WaitQHead->pPrev = NULL;
+    WaitQHead->pNext = NULL;
+    WaitQTail->pPrev = NULL;
+    WaitQTail->pNext = NULL;
 }
 
 BOOL IsReadyQEmpty(){
@@ -24,9 +33,14 @@ BOOL IsWaitQEmpty(){
 
 void ReadyQEnqueue(Thread new) {
 	Thread* now = (Thread*)malloc(sizeof(Thread));
+    memcpy(now, &new, sizeof(Thread));
 	if (IsReadyQEmpty()) {
 		ReadyQHead = now;
 		ReadyQTail = now;
+        ReadyQHead->pPrev = NULL;
+        ReadyQHead->pNext = NULL;
+        ReadyQTail->pPrev = NULL;
+        ReadyQTail->pNext = NULL;
 	}
 	else {
 		ReadyQTail->pNext = now;
@@ -34,10 +48,12 @@ void ReadyQEnqueue(Thread new) {
 		now->pNext = NULL;
 		ReadyQTail = now;
 	}
+    printf("pPrev now pNext : %d %d %d\n", now->pPrev, now, now->pNext);
 }
 
 void WaitQEnqueue(Thread new) {
 	Thread* now = (Thread*)malloc(sizeof(Thread));
+    memcpy(now, &new, sizeof(Thread));
 	if (IsWaitQEmpty()) {
 		WaitQHead = now;
 		WaitQTail = now;
@@ -51,25 +67,37 @@ void WaitQEnqueue(Thread new) {
 }
 
 Thread ReadyQDequeue(){
-	if (IsReadyQEmpty())
-		return (Thread)-1; // 될까?
+	if (IsReadyQEmpty()) {
+        Thread temp;
+        temp.tid=-1;
+        return temp;
+    }
 	else {
 		Thread temp = *ReadyQHead;
 		Thread* tempPtr = ReadyQHead;
-		ReadyQHead = ReadyQHead->pNext;
-		if (ReadyQHead == NULL)
+        printf("\ncheck link of ReadyQ\n");
+        printf("%d %d %d\n", tempPtr->pPrev, tempPtr, tempPtr->pNext);
+		if (ReadyQHead->pNext == NULL){
+            ReadyQHead = NULL;
 			ReadyQTail = NULL;
-		ReadyQHead->pPrev = NULL;
+        }
+        else {
+            ReadyQHead = ReadyQHead->pNext;
+		    ReadyQHead->pPrev = NULL;
+        }
 		free(tempPtr);
 		return temp;
 	}
 }
 
 Thread WaitQDequeue(){
-	if (IsWaitQEmpty())
-		return (Thread)-1; // 될까?
+	if (IsWaitQEmpty()) {
+        Thread temp;
+        temp.tid=-1;
+        return temp;
+    }
 	else {
-		Thread temp = *WaitQHead;
+        Thread temp = *WaitQHead;
 		Thread* tempPtr = WaitQHead;
 		WaitQHead = WaitQHead->pNext;
 		if (WaitQHead == NULL)
@@ -79,3 +107,4 @@ Thread WaitQDequeue(){
 		return temp;
 	}
 }
+
