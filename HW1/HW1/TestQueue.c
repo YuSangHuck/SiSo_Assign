@@ -1,6 +1,7 @@
 #include "Init.h"
 #include "Thread.h"
 #include "Queue.h"
+#include "Common.h"
 #include <stdio.h>
 
 int main() {

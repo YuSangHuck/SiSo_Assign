@@ -2,6 +2,7 @@
 #include "Init.h"
 #include "Scheduler.h"
 #include "Queue.h"
+#include "Common.h"
 
 #include "TestCase1.h"
 #include "TestCase2.h"

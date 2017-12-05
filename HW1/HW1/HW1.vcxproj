@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Scheduler.h" />
