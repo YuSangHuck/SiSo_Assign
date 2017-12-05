@@ -7,7 +7,7 @@ int	RunScheduler(void){
 
 }
 
-void __ContextSwitch(Thread pCurThread, Thread* pNewThread){
+void __ContextSwitch(Thread* pCurThread, Thread* pNewThread){
 
 }
 

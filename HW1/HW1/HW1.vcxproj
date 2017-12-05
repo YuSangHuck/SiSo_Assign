@@ -35,6 +35,7 @@
     <ClCompile Include="TestCase1.c" />
     <ClCompile Include="TestCase2.c" />
     <ClCompile Include="TestCase3.c" />
+    <ClCompile Include="TestQueue.c" />
     <ClCompile Include="Thread.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

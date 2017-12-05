@@ -52,7 +52,7 @@ void WaitQEnqueue(Thread new) {
 
 Thread ReadyQDequeue(){
 	if (IsReadyQEmpty())
-		return -1; // 될까?
+		return (Thread)-1; // 될까?
 	else {
 		Thread temp = *ReadyQHead;
 		Thread* tempPtr = ReadyQHead;
@@ -67,7 +67,7 @@ Thread ReadyQDequeue(){
 
 Thread WaitQDequeue(){
 	if (IsWaitQEmpty())
-		return -1; // 될까?
+		return (Thread)-1; // 될까?
 	else {
 		Thread temp = *WaitQHead;
 		Thread* tempPtr = WaitQHead;
