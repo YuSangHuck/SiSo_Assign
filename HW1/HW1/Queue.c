@@ -49,6 +49,10 @@ void WaitQEnqueue(Thread new) {
 	if (IsWaitQEmpty()) {
 		WaitQHead = now;
 		WaitQTail = now;
+		WaitQHead->pPrev = NULL;
+		WaitQHead->pNext = NULL;
+		WaitQTail->pPrev = NULL;
+		WaitQTail->pNext = NULL;
 	}
 	else {
 		WaitQTail->pNext = now;
@@ -67,8 +71,8 @@ Thread ReadyQDequeue() {
 	else {
 		Thread temp = *ReadyQHead;
 		Thread* tempPtr = ReadyQHead;
-		printf("\ncheck link of ReadyQ\n");
-		printf("%d %d %d\n", tempPtr->pPrev, tempPtr, tempPtr->pNext);
+		//printf("\ncheck link of ReadyQ\n");
+		//printf("%d %d %d\n", tempPtr->pPrev, tempPtr, tempPtr->pNext);
 		if (ReadyQHead->pNext == NULL) {
 			ReadyQHead = NULL;
 			ReadyQTail = NULL;
@@ -92,9 +96,14 @@ Thread WaitQDequeue() {
 		Thread temp = *WaitQHead;
 		Thread* tempPtr = WaitQHead;
 		WaitQHead = WaitQHead->pNext;
-		if (WaitQHead == NULL)
+		if (WaitQHead == NULL) {
 			WaitQTail = NULL;
-		WaitQHead->pPrev = NULL;
+			WaitQHead = NULL;
+		}
+		else {
+			WaitQHead = WaitQHead->pNext;
+			WaitQHead->pPrev = NULL;
+		}
 		free(tempPtr);
 		return temp;
 	}
@@ -107,9 +116,8 @@ Thread SearchReadyTCB(thread_t tid) {
 			return *cursor;
 		cursor = cursor->pNext;
 	}
-    Thread temp;
-    temp.tid = -1;
-	return temp;
+	cursor->tid = -1;
+	return *cursor;
 }
 
 Thread SearchWaitTCB(thread_t tid) {
@@ -119,7 +127,6 @@ Thread SearchWaitTCB(thread_t tid) {
 			return *cursor;
 		cursor = cursor->pNext;
 	}
-    Thread temp;
-    temp.tid = -1;
-    return *cursor;
+	cursor->tid = -1;
+	return *cursor;
 }
