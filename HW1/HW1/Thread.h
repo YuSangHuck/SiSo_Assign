@@ -13,7 +13,7 @@ typedef enum {
 	THREAD_STATUS_RUN = 0,
 	THREAD_STATUS_READY = 1,
 	THREAD_STATUS_BLOCKED = 2,
-	THREAD_STATUS_ZOMBIE 3,
+	THREAD_STATUS_ZOMBIE = 3,
 }ThreadStatus;
 
 typedef struct _Thread Thread;

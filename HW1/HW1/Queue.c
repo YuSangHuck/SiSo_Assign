@@ -57,6 +57,8 @@ Thread ReadyQDequeue(){
 		Thread temp = *ReadyQHead;
 		Thread* tempPtr = ReadyQHead;
 		ReadyQHead = ReadyQHead->pNext;
+		if (ReadyQHead == NULL)
+			ReadyQTail = NULL;
 		ReadyQHead->pPrev = NULL;
 		free(tempPtr);
 		return temp;
@@ -70,6 +72,8 @@ Thread WaitQDequeue(){
 		Thread temp = *WaitQHead;
 		Thread* tempPtr = WaitQHead;
 		WaitQHead = WaitQHead->pNext;
+		if (WaitQHead == NULL)
+			WaitQTail = NULL;
 		WaitQHead->pPrev = NULL;
 		free(tempPtr);
 		return temp;

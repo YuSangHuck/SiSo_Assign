@@ -27,11 +27,17 @@
     <ClInclude Include="Queue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TestCase1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCase2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCase3.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Scheduler.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -39,6 +45,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Queue.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCase1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCase2.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCase3.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Testmain.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

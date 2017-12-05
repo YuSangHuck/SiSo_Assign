@@ -22,3 +22,7 @@ int	thread_resume(thread_t tid){
 thread_t thread_self(){
 
 }
+
+int thread_exit(void * retval){
+	return 0;
+}
