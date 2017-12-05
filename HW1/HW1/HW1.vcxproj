@@ -22,12 +22,20 @@
     <ClInclude Include="Init.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Scheduler.h" />
+    <ClInclude Include="TestCase1.h" />
+    <ClInclude Include="TestCase2.h" />
+    <ClInclude Include="TestCase3.h" />
     <ClInclude Include="Thread.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
+    <ClCompile Include="Init.c" />
+    <ClCompile Include="Testmain.c" />
     <ClCompile Include="Queue.c" />
     <ClCompile Include="Scheduler.c" />
+    <ClCompile Include="TestCase1.c" />
+    <ClCompile Include="TestCase2.c" />
+    <ClCompile Include="TestCase3.c" />
+    <ClCompile Include="TestQueue.c" />
     <ClCompile Include="Thread.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
