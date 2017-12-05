@@ -1,14 +1,16 @@
+#include "Init.h"
 #include "Thread.h"
 #include "Queue.h"
 #include <stdio.h>
 
 int main() {
+    Init();
 	Thread th1, th2, th3;
 	int i = 0;
 	th1.tid = 1; th2.tid = 2; th3.tid = 3;
 	printf("id of threads direct : %d %d %d\n", th1.tid, th2.tid, th3.tid);
 
-	for (i; i < 3; i++) {
+    for (i; i < 3; i++) {
 		if (i == 0) {
 			printf("Enqueue th1\n");
 			ReadyQEnqueue(th1);

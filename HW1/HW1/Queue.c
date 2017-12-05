@@ -8,19 +8,11 @@
 void InitReadyQ() {
 	Thread* ReadyQHead = NULL;
 	Thread*	ReadyQTail = NULL;
-	ReadyQHead->pPrev = NULL;
-	ReadyQHead->pNext = NULL;
-	ReadyQTail->pPrev = NULL;
-	ReadyQTail->pNext = NULL;
 }
 
 void InitWaitQ() {
 	Thread* WaitQHead = NULL;
 	Thread*	WaitQTail = NULL;
-	WaitQHead->pPrev = NULL;
-	WaitQHead->pNext = NULL;
-	WaitQTail->pPrev = NULL;
-	WaitQTail->pNext = NULL;
 }
 
 BOOL IsReadyQEmpty() {
