@@ -40,7 +40,7 @@ Thread*	ReadyQTail;
 
 /* head and tail pointers for waiting queue */
 Thread*	WaitQHead;
-Thread*	WaitQTai;
+Thread*	WaitQTail;
 
 int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) (void *), void *arg);
 int thread_join(thread_t thread, void **retval);

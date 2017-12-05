@@ -7,5 +7,8 @@
 
 int main(void){
 
+	Queue readyQ;
+	Queue waitQ;
+	
 }
 
