@@ -11,7 +11,8 @@ int	RunScheduler(void) {
 		else {
 			Thread dequeue = ReadyQDequeue();
 			Thread curThread = thread_self();
-			__ContextSwitch(&dequeue, &curThread);
+			__ContextSwitch(runningThread, &dequeue);
+			*runningThread = dequeue;
 			sleep(TIMESLICE);
 		}
 	}

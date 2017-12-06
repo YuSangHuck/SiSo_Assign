@@ -29,6 +29,7 @@
     <ClInclude Include="Thread.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common.c" />
     <ClCompile Include="Init.c" />
     <ClCompile Include="Testmain.c" />
     <ClCompile Include="Queue.c" />
