@@ -19,4 +19,4 @@ Thread.o : Thread.c Thread.o
 Testmain.o : Testmain.c
 	gcc -c Testmain.c
 clean :
-	rm rf *.o
+	rm -rf *.o
