@@ -37,7 +37,7 @@ void TestCase1(void)
 	thread_create(&tid[2], NULL, (void*)Tc1ThreadProc, (void*)3);
 	thread_create(&tid[3], NULL, (void*)Tc1ThreadProc, (void*)4);
 	thread_create(&tid[4], NULL, (void*)Tc1ThreadProc, (void*)5);
-
+    
 	while (1) {}
 
 	return;

@@ -7,7 +7,7 @@
 
 void Init(void) {
 	// Create ready Queue and Waiting Queue
-    printf("[Init.c:10]\t Init start\n");
+//    printf("[Init.c:10]\t Init start\n");
     runningThread = (Thread*)malloc(sizeof(Thread));
     runningThread->tid = 0;
 	InitReadyQ();

@@ -6,18 +6,19 @@
 
 int	RunScheduler(void) {
     printf("[Scheduler:8]\t Start\n");
-    sleep(5);
-    Thread thread;
+//    sleep(5);
+    Thread* headPtr;
     while (1) {
 		if (IsReadyQEmpty()){
             printf("[Scheduler:12]\t ReadyQ is Empty\n");
 			sleep(TIMESLICE);
         }
 		else {
-            thread = ReadyQDequeue();
-            printf("[scheduler:17]\t dequeue tid %d\n",thread.tid);
-            __ContextSwitch(runningThread, &thread);
-            runningThread = &thread;
+            headPtr = ReadyQHead;
+            ReadyQDequeue();
+            printf("[scheduler:17]\t dequeue tid %d\n",headPtr->tid);
+            __ContextSwitch(runningThread, headPtr);
+            runningThread = headPtr;
 			sleep(TIMESLICE);   
 		}
 	}
