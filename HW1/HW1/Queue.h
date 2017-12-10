@@ -16,7 +16,7 @@ void ReadyQEnqueue(Thread new);
 void WaitQEnqueue(Thread new);
 Thread ReadyQDequeue();
 Thread WaitQDequeue();
-Thread SearchReadyTCB(thread_t tid);
-Thread SearchWaitTCB(thread_t tid);
+Thread* SearchReadyTCB(thread_t tid);
+Thread* SearchWaitTCB(thread_t tid);
 
 #endif

@@ -5,31 +5,8 @@
 #include "Common.h"
 
 #include <signal.h>
-#define NULL 0
+//#define NULL 0
 
-
-int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) (void *), void *arg) {
-	// pthread_create
-	pthread_t tid;
-	WrapperArg wrapperArg;
-	wrapperArg.funcPtr = start_routine;
-	wrapperArg.funcArg = arg;
-	pthread_create(&tid, NULL, __wrapperFunc, &wrapperArg);
-
-	// Allocate & Init TCB
-	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
-	TCB_Init(threadPtr);
-	threadPtr->parentTid = thread_self();
-	threadPtr->tid = tid;
-
-	// Move TCB to ReadyQ
-	ReadyQEnqueue(*threadPtr);
-
-	// send SIGUSR1 to child
-	pthread_kill(tid, SIGUSR1);
-
-	// Return
-}
 
 void* __wrapperFunc(void* arg) {
 	void* ret;
@@ -38,37 +15,66 @@ void* __wrapperFunc(void* arg) {
 	int retSig;
 
 	// wait until receiving singal(SIGUSR1)
+    printf("[wrapper:18]\t Setting the sigset\n");
 	sigemptyset(&set);
 	sigaddset(&set, SIGUSR1);
+    printf("[wrapper:21]\t %d sigwait SIGUSR1\n",getpid());
 	sigwait(&set, &retSig);
 
+    printf("[wrapper:24]\t wait_handler called\n");
+    printf("[wrapper:25]\t ready thread id : %d\n", thread_self());
 	__thread_wait_handler(0);
+    printf("check\n");
 	void* funcPtr = pArg->funcPtr;
 	void* funcArg = pArg->funcArg;
-	//ret = (*(void*)(void*)(funcPtr))(funcArg);
 	
 	ret = (*(void*(*)(void*))funcPtr)(funcArg);
 	return ret;
 }
 
-void __thread_wait_handler(int signo) {
-	Thread pTh;
-	pTh = SearchReadyTCB(thread_self());
 
-	pthread_mutex_lock(&(pTh.readyMutex));
-	while (pTh.bRunnable == 0)
-		pthread_cond_wait(&(pTh.readyCond), &(pTh.readyMutex));
-	pthread_mutex_unlock(&(pTh.readyMutex));
+int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) (void *), void *arg) {
+	// pthread_create
+    printf("[th_create:38]\t pthread_create()\n");
+    WrapperArg wrapperArg;
+	wrapperArg.funcPtr = start_routine;
+	wrapperArg.funcArg = arg;
+	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
+    printf("[th_create:43]\t pthread_create tid : %d\n\t\t pthread_self : %d\n", *thread, pthread_self());
+    usleep(10);
 
+	// Allocate & Init TCB
+    printf("[th_create:46]\t Allocate & Init TCB\n");
+	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
+//    printf("%d",*thread);
+//    Thread tempThread = SearchReadyTCB(*thread);
+//    memcpy(threadPtr, &tempThread, sizeof(Thread));
+	pthread_cond_t readyCond = PTHREAD_COND_INITIALIZER;
+	pthread_mutex_t readyMutex = PTHREAD_MUTEX_INITIALIZER;
+	TCB_Init(threadPtr);
+	threadPtr->parentTid = thread_self();
+	threadPtr->tid = *thread;
+    threadPtr->readyCond = readyCond;
+    threadPtr->readyMutex = readyMutex;
+
+	// Move TCB to ReadyQ
+//    if(IsReadyQEmpty())
+//        printf("[th_create:58]\t ReadyQ is empty\n");
+    printf("[th_create:59]\t ENQUEUE, tid : %d\n", threadPtr->tid);
+	ReadyQEnqueue(*threadPtr);
+//    if(!IsReadyQEmpty())
+//        printf("[th_create:57]\t ReadyQ is not empty\n");
+
+	// send SIGUSR1 to child
+    printf("[th_create:61]\t SIGNAL SIGUSR1\n");
+	pthread_kill(*thread, SIGUSR1);
+	// Return
 }
 
 void TCB_Init(Thread* TCB) {
 	TCB->status = THREAD_STATUS_READY;
 	TCB->pExitCode = 0;
-	TCB->readyCond = PTHREAD_COND_INITIALIZER;
 	TCB->bRunnable = 0;
-	TCB->readyMutex = PTHREAD_MUTEX_INITIALIZER;
-	TCB->parentTid = 0;
 	TCB->pPrev = NULL;
 	TCB->pNext = NULL;
 }

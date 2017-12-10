@@ -29,6 +29,7 @@ void* Tc1ThreadProc(void* param)
  */
 void TestCase1(void)
 {
+    printf("TestCase1 start\n");
 	thread_t tid[TOTAL_THREAD_NUM];
 
 	thread_create(&tid[0], NULL, (void*)Tc1ThreadProc, (void*)1);

@@ -6,6 +6,8 @@
 #include "Thread.h"
 
 Thread* runningThread;
-void __thread_wait_handler(Thread* thread);
+void __sigusr1_handler();
+void _thread_wait_handler(Thread* thread);
+void __thread_wait_handler(int signo);
 void __thread_wakeup(Thread* thread);
 #endif

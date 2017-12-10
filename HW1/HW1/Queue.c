@@ -41,7 +41,7 @@ void ReadyQEnqueue(Thread new) {
 		now->pNext = NULL;
 		ReadyQTail = now;
 	}
-	printf("pPrev now pNext : %d %d %d\n", now->pPrev, now, now->pNext);
+//	printf("pPrev now pNext : %d %d %d\n", now->pPrev, now, now->pNext);
 }
 
 void WaitQEnqueue(Thread new) {
@@ -71,6 +71,7 @@ Thread ReadyQDequeue() {
 	}
 	else {
 		Thread temp = *ReadyQHead;
+        memcpy(&temp, ReadyQHead, sizeof(Thread));
 		Thread* tempPtr = ReadyQHead;
 		//printf("\ncheck link of ReadyQ\n");
 		//printf("%d %d %d\n", tempPtr->pPrev, tempPtr, tempPtr->pNext);
@@ -110,24 +111,24 @@ Thread WaitQDequeue() {
 	}
 }
 
-Thread SearchReadyTCB(thread_t tid) {
+Thread* SearchReadyTCB(thread_t tid) {
 	Thread* cursor = ReadyQHead;
 	while (cursor != NULL) {
 		if (cursor->tid == tid)
-			return *cursor;
+			return cursor;
 		cursor = cursor->pNext;
 	}
 	cursor->tid = -1;
-	return *cursor;
+	return cursor;
 }
 
-Thread SearchWaitTCB(thread_t tid) {
+Thread* SearchWaitTCB(thread_t tid) {
 	Thread* cursor = WaitQHead;
 	while (cursor != NULL) {
 		if (cursor->tid == tid)
-			return *cursor;
+			return cursor;
 		cursor = cursor->pNext;
 	}
 	cursor->tid = -1;
-	return *cursor;
+	return cursor;
 }
