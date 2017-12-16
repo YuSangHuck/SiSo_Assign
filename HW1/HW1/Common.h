@@ -5,6 +5,7 @@
 #include "Scheduler.h"
 #include "Thread.h"
 
+//int testI;
 Thread* runningThread;
 void __sigusr1_handler();
 void _thread_wait_handler(Thread* thread);

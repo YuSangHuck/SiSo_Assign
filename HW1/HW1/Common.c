@@ -1,7 +1,8 @@
 #include "Common.h"
 
 void __sigusr1_handler(){
-    printf("[sigusr1_handler]\t SIGUSR1 catched\n");
+    //printf("[sigusr1_handler]\t SIGUSR1 catched\n");
+    //testI++;
 }
 
 void _thread_wait_handler(Thread* TCB) {

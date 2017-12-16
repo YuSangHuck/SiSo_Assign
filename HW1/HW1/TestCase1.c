@@ -1,6 +1,6 @@
 #include "TestCase1.h"
-
-
+#include "Queue.h"
+#include "Common.h"
 
 void* Tc1ThreadProc(void* param)
 {
@@ -38,6 +38,18 @@ void TestCase1(void)
 	thread_create(&tid[3], NULL, (void*)Tc1ThreadProc, (void*)4);
 	thread_create(&tid[4], NULL, (void*)Tc1ThreadProc, (void*)5);
     
+//    sleep(1);
+    int i = 0;
+    while(i<5){
+        printf("tid[%d]:%d\n", i, tid[i]);
+        i++;
+    }
+    while(!IsReadyQEmpty()){
+        Thread thread;
+        thread = ReadyQDequeue();
+        printf("Queue : %d\n", thread.tid);
+    }
+//    printf("# of SIGUSR1 : %d\n",testI);
 	while (1) {}
 
 	return;

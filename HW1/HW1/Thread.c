@@ -22,7 +22,7 @@ void* __wrapperFunc(void* arg) {
 	sigwait(&set, &retSig);
 
 //    printf("[wrapper:24]\t wait_handler called\n");
-//    printf("[wrapper:25]\t ready thread id : %d\n", thread_self());
+    printf("[wrapper:25]\t ready thread id : %d\n", thread_self());
 	__thread_wait_handler(0);
 	void* funcPtr = pArg->funcPtr;
 	void* funcArg = pArg->funcArg;
@@ -47,8 +47,8 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
     }
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
 //    printf("[th_create:43]\t pthread_create tid : %d\n\t\t pthread_self : %d\n", *thread, pthread_self());
-    usleep(10);
-
+//    usleep(1000);
+    sleep(1);
 	// Allocate & Init TCB
 //    printf("[th_create:46]\t Allocate & Init TCB\n");
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
