@@ -7,6 +7,8 @@
 
 //int testI;
 Thread* runningThread;
+Queue* ReadyQ;
+Queue* WaitQ;
 void __sigusr1_handler();
 void _thread_wait_handler(Thread* thread);
 void __thread_wait_handler(int signo);

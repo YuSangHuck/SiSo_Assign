@@ -67,7 +67,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 //    if(IsReadyQEmpty())
 //        printf("[th_create:58]\t ReadyQ is empty\n");
 //    printf("[th_create:59]\t Thread : %d\n\t\t ENQUEUE, tid : %d\n", threadPtr, threadPtr->tid);
-	ReadyQEnqueue(*threadPtr);
+	Enqueue(ReadyQ,threadPtr);
 //    if(!IsReadyQEmpty())
 //        printf("[th_create:57]\t ReadyQ is not empty\n");
 

@@ -18,7 +18,7 @@ void _thread_wait_handler(Thread* TCB) {
 void __thread_wait_handler(int signo) {
 //    printf("[wait_hand:18]\t start\n");
 	Thread* pTh;
-	pTh = SearchReadyTCB(thread_self());
+	pTh = SearchTCB(ReadyQ,thread_self());
 
     pthread_mutex_lock(&(pTh->readyMutex));
 //    printf("[wait_hand:22]\t wait tid %d\n", pTh->tid);
