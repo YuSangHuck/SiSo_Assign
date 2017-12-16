@@ -14,5 +14,9 @@ void Init(void) {
 	InitWaitQ();
     signal(SIGUSR2, __thread_wait_handler);
     signal(SIGUSR1, __sigusr1_handler);
+	Thread* ReadyQHead = NULL;
+	Thread*	ReadyQTail = NULL;
+	Thread* WaitQHead = NULL;
+	Thread*	WaitQTail = NULL;
 
 }

@@ -40,6 +40,10 @@
     <ClCompile Include="TestQueue.c" />
     <ClCompile Include="Thread.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Testmain" />
+    <None Include="TestQueue" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9B98166C-139D-412D-A6C7-AC540E6CFE5D}</ProjectGuid>

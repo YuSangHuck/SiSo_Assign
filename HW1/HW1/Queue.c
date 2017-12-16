@@ -6,16 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct _Queue {
-	Thread* front;
-	Thread* rear;
-	//Thread* prev;
-	//Thread* next;
-	int count;
-	int type;	// ReadyQ : 1, WaitQ : 2
-} Queue;
-
-
 //void InitReadyQ() {
 //	Thread* ReadyQHead = NULL;
 //	Thread*	ReadyQTail = NULL;
