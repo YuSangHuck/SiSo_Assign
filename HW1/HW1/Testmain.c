@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 void main(int argc, char* argv[]) {
-    perror("[FileName]\t state");
+    printf("[FileName]\t state\n");
     int TcNum;
 	thread_t tid1, tid2, tid3, tid4;
 
@@ -41,8 +41,8 @@ void main(int argc, char* argv[]) {
 		break;
 
 	}
-//    printf("[main:41]\t RunScheduler()\n");
-//	RunScheduler();
+    printf("[main:41]\t RunScheduler()\n");
+    RunScheduler();
 	while (1) {}
 }
 
