@@ -48,7 +48,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
 //    printf("[th_create:43]\t pthread_create tid : %d\n\t\t pthread_self : %d\n", *thread, pthread_self());
 //    usleep(1000);
-    sleep(1);
+//    sleep(1);
 	// Allocate & Init TCB
 //    printf("[th_create:46]\t Allocate & Init TCB\n");
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));

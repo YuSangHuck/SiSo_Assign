@@ -9,13 +9,13 @@ int	RunScheduler(void) {
 //    sleep(5);
     Thread* headPtr;
     while (1) {
-		if (IsReadyQEmpty()){
+		if (IsQEmpty(ReadyQ)){
             printf("[Scheduler:12]\t ReadyQ is Empty\n");
 			sleep(TIMESLICE);
         }
 		else {
             headPtr = ReadyQHead;
-            ReadyQDequeue();
+            Dequeue(ReadyQ);
             printf("[scheduler:17]\t dequeue tid %d\n",headPtr->tid);
             __ContextSwitch(runningThread, headPtr);
             runningThread = headPtr;
