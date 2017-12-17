@@ -12,7 +12,7 @@ typedef struct _Queue {
 void InitQ(Queue* queue, int type);
 BOOL IsQEmpty(Queue* queue);
 void Enqueue(Queue* queue, Thread* new);
-Thread* Dequeue(Queue*);
-Thread* SearchTCB(Queue*, thread_t tid);
-
+Thread* Dequeue(Queue *queue);
+Thread* SearchTCB(Queue* queue, thread_t tid);
+void ShowQueue(Queue* queue); 
 #endif

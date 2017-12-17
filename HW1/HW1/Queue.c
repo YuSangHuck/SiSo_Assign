@@ -75,9 +75,9 @@ void Enqueue(Queue* queue, Thread* new) {
 	if (queue->type == 1) {	// ReadyQ
 		if (IsQEmpty(queue)) {
 			queue->front = new;
-			queue->rear = new;
 			queue->front->pPrev = NULL;
 			queue->front->pNext = NULL;
+			queue->rear = new;
 			queue->rear->pPrev = NULL;
 			queue->rear->pNext = NULL;
 			//ReadyQHead->pPrev = NULL;
@@ -98,9 +98,9 @@ void Enqueue(Queue* queue, Thread* new) {
 	else if (queue->type == 2) {	// WaitQ
 		if (IsQEmpty(queue)) {
 			queue->front = new;
-			queue->rear = new;
 			queue->front->pPrev = NULL;
 			queue->front->pNext = NULL;
+			queue->rear = new;
 			queue->rear->pPrev = NULL;
 			queue->rear->pNext = NULL;
 			//ReadyQHead->pPrev = NULL;
@@ -252,3 +252,30 @@ Thread* SearchTCB(Queue* queue, thread_t tid) {
 	cursor->tid = -1;
 	return cursor;
 }
+
+void ShowQueue(Queue* queue){
+    printf("@Queue status\n");
+    printf("front\t\trear\t\tcount\t\ttype\n");
+    if(IsQEmpty(queue)){
+        printf("%-9d\t%-9d\t%-9d\t%-9d\n\n", queue->front, queue->rear, queue->count, queue->type);
+        return;
+    }
+	Thread* cursor = queue->front;
+    printf("%-9d\t%-9d\t%-9d\t%-9d\n", queue->front, queue->rear, queue->count, queue->type);
+
+    printf("@Queue Links\n");
+    printf("prev\t\tnow\t\tnext\t\ttid\t\tfront\t\trear\n");
+	while (cursor != NULL) {
+        printf("%-9d\t%-9d\t%-9d\t%-9d\t", cursor->pPrev, cursor, cursor->pNext, cursor->tid);
+        if(queue->type==1 && cursor==ReadyQHead)
+            printf("%-9d\n", cursor);
+        else if(queue->type==1 && cursor==ReadyQTail)
+            printf("\t\t%-9d\n", cursor);
+        else
+            printf("\n");
+		cursor = cursor->pNext;
+	}
+    printf("\n");
+	return ;
+}
+
