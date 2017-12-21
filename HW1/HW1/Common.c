@@ -3,16 +3,6 @@
 void __sigusr1_handler(){
 }
 
-void _thread_wait_handler(Thread* TCB) {
-	//Thread* pTh=TCB;
-	
-	pthread_mutex_lock(&(TCB->readyMutex));
-    while (TCB->bRunnable == 0)
-    	pthread_cond_wait(&(TCB->readyCond), &(TCB->readyMutex));
-	pthread_mutex_unlock(&(TCB->readyMutex));
-
-}
-
 void __thread_wait_handler(int signo) {
 	Thread* pTh;
 	pTh = SearchTCB(ReadyQ,thread_self());

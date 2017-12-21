@@ -35,20 +35,20 @@ void* __wrapperFunc(void* arg) {
 
 
 int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) (void *), void *arg) {
-    printf("thread_create start at (%d)\n", thread_self());
+//    printf("thread_create start at (%d)\n", thread_self());
 	// pthread_create
     WrapperArg wrapperArg;
-    printf("&wrapperArg : (%d)\n", &(wrapperArg));
+//    printf("&wrapperArg : (%d)\n", &(wrapperArg));
 	wrapperArg.funcPtr = start_routine;
 	wrapperArg.funcArg = arg;
     if(arg == 0){
         pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
         return 0;
     }
-    printf("(%d)\n",*(int*)arg);
-    printf("(%d)\n",*(int*)wrapperArg.funcArg);
+//    printf("(%d)\n",*(int*)arg);
+//    printf("(%d)\n",*(int*)wrapperArg.funcArg);
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
-    sleep(1);
+    usleep(100);
 	// Allocate & Init TCB
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
 	pthread_cond_t readyCond = PTHREAD_COND_INITIALIZER;
@@ -67,10 +67,10 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	Enqueue(ReadyQ,threadPtr);
 
 	// send SIGUSR1 to child
-    printf("signal\n");
+//    printf("signal\n");
     pthread_kill(*thread, SIGUSR1);
 	// Return
-	printf("thread_create finish at (%d)\n", thread_self());
+//	printf("thread_create finish at (%d)\n", thread_self());
 }
 
 int thread_join(thread_t thread, void **retval) {
