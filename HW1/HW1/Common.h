@@ -5,7 +5,7 @@
 #include "Scheduler.h"
 #include "Thread.h"
 
-int index;
+int myIndex;
 Thread* runningThread;
 Queue* ReadyQ;
 Queue* WaitQ;

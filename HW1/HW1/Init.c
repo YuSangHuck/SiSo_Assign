@@ -6,7 +6,7 @@
 #include <signal.h>
 
 void Init(void) {
-	index = 0;
+	myIndex = 0;
 
 	// Create ready Queue and Waiting Queue
     runningThread = (Thread*)malloc(sizeof(Thread));

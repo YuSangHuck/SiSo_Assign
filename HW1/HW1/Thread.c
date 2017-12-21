@@ -12,23 +12,30 @@ void* __wrapperFunc(void* arg) {
     void* ret;
     int retSig;
     WrapperArg* pArg = (WrapperArg*)arg;
-    sigset_t set;
-    printf("tid : (%d)\t arg : (%d)\n\
+    WrapperArg myArg = *pArg;
+
+//    printf("&wrapperArg : (%d)\n", arg);
+//    printf("tid : (%d)\t arg : (%d)\n\
 \t\t\t (WrapperArg*)arg : (%d)\n\
-\t\t\t ((WrapperArg*)arg)->funcArg : (%d)\n", thread_self(), &arg, (WrapperArg*)arg, &(((WrapperArg*)arg)->funcArg));
+\t\t\t ((WrapperArg*)arg)->funcArg : (%d)\n\
+\t\t\t *((WrapperArg*)arg)->funcArg : (%d)\n", thread_self(), arg, pArg, pArg->funcArg, (pArg->funcArg));
+    sigset_t set;
 	sigemptyset(&set);
 	sigaddset(&set, SIGUSR1);
 	sigwait(&set, &retSig);
 
 	__thread_wait_handler(0);
-	void* funcPtr = pArg->funcPtr;
-	void* funcArg = pArg->funcArg;
-	ret = (*(void*(*)(void*))funcPtr)(funcArg);
+    void* funcPtr = myArg.funcPtr;
+    void* funcArg = myArg.funcArg;
+//	void* funcPtr = pArg->funcPtr;
+//	void* funcArg = pArg->funcArg;
+    ret = (*(void*(*)(void*))funcPtr)(funcArg);
 	return ret;
 }
 
 
 int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) (void *), void *arg) {
+    printf("thread_create start at (%d)\n", thread_self());
 	// pthread_create
     WrapperArg wrapperArg;
     printf("&wrapperArg : (%d)\n", &(wrapperArg));
@@ -38,6 +45,8 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
         pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
         return 0;
     }
+    printf("(%d)\n",*(int*)arg);
+    printf("(%d)\n",*(int*)wrapperArg.funcArg);
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
     sleep(1);
 	// Allocate & Init TCB
@@ -58,6 +67,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	Enqueue(ReadyQ,threadPtr);
 
 	// send SIGUSR1 to child
+    printf("signal\n");
     pthread_kill(*thread, SIGUSR1);
 	// Return
 	printf("thread_create finish at (%d)\n", thread_self());
