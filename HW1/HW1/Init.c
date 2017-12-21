@@ -6,8 +6,9 @@
 #include <signal.h>
 
 void Init(void) {
+	index = 0;
+
 	// Create ready Queue and Waiting Queue
-//    printf("[Init.c:10]\t Init start\n");
     runningThread = (Thread*)malloc(sizeof(Thread));
     runningThread->tid = 0;
     

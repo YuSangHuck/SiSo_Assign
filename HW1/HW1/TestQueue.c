@@ -31,9 +31,6 @@ int main() {
         ShowQueue(ReadyQ);
         printf("search(2) : %d\n", SearchTCB(ReadyQ, 2));
 	}
-//	printf("%d %d %d\n", ReadyQHead->pPrev, ReadyQHead, ReadyQHead->pNext);
-//	printf("%d %d %d\n", ReadyQHead, ReadyQHead->pNext, ReadyQHead->pNext->pNext);
-//	printf("%d %d %d\n\n", ReadyQHead->pNext, ReadyQHead->pNext->pNext, ReadyQHead->pNext->pNext->pNext);
 	for (i = 0; i < 3; i++) {
 		if (i == 0)
 			printf("tid : %u\n", Dequeue(ReadyQ)->tid);

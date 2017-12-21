@@ -39,19 +39,6 @@ void TestCase1(void)
 //	thread_create(&tid[3], NULL, (void*)Tc1ThreadProc, (void*)i4);
 //	thread_create(&tid[4], NULL, (void*)Tc1ThreadProc, (void*)i5);
     
-//    sleep(1);
-//    int i = 0;
-//    while(i<5){
-//        printf("tid[%d]: \t%p\n", i, tid[i]);
-//        i++;
-//    }
-//    while(!IsQEmpty(ReadyQ)){
-//        Thread* thread;
-//        thread = Dequeue(ReadyQ);
-//        printf("Queue : \t%p\n", thread->tid);
-//    }
-//    printf("# of SIGUSR1 : %d\n",testI);
-
     while (1) {}
 
 	return;
