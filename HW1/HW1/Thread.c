@@ -9,34 +9,48 @@
 
 
 void* __wrapperFunc(void* arg) {
+    int a;
     void* ret;
     WrapperArg* pArg = (WrapperArg*)arg;
     sigset_t set;
+    printf("line(16), tid:(%d), &a:(%d)\n", thread_self(), &a);
     int retSig;
-    printf("tid : (%d), &arg : (%d), arg: (%d)\n", (int)thread_self(), &(pArg->funcArg), pArg->funcArg);
+    printf("tid : (%d)\t arg : (%d)\n\
+\t\t\t (WrapperArg*)arg : (%d)\n\
+\t\t\t ((WrapperArg*)arg)->funcArg : (%d)\n", thread_self(), &arg, (WrapperArg*)arg, &(((WrapperArg*)arg)->funcArg));
+    printf("line(21), tid:(%d), &a:(%d)\n", thread_self(), &a);
+//    printf("%d\n",(WrapperArg*)arg);
+//    printf("tid : (%d), &arg : (%d), arg: (%d)\n", (int)thread_self(), &(pArg->funcArg), pArg->funcArg);
 //    printf("@@@@@@@@@@@@@@@@ check arg %d @@@@@@@@@@@@@@@@\n",pArg->funcArg);
-
+    printf("line(25), tid:(%d), &a:(%d)\n", thread_self(), &a);
 //    printf("[wrapper:18]\t Setting the sigset\n");
 	sigemptyset(&set);
+    printf("line(28), tid:(%d), &a:(%d)\n", thread_self(), &a);
 	sigaddset(&set, SIGUSR1);
+    printf("line(30), tid:(%d), &a:(%d)\n", thread_self(), &a);
 //    printf("[wrapper:21]\t sigwait SIGUSR1 : (%d)\n",(int)thread_self());
 //    printf("[before]\t sigwait thread id : (%d)\n\
 \t\t sigwait thread &arg : %d\n\
 \t\t sigwait thread arg : %d\n", (int)thread_self(), &(pArg->funcArg), pArg->funcArg);
 	sigwait(&set, &retSig);
+    printf("line(36), tid:(%d), &a:(%d)\n", thread_self(), &a);
 //    printf("[after]\t\t ready thread id : (%d)\n\
 \t\t ready thread &arg : %d\n\
 \t\t ready thread arg : %d\n", (int)thread_self(), &(pArg->funcArg), pArg->funcArg);
 
+
 //    printf("[wrapper:24]\t wait_handler called\n");
 	__thread_wait_handler(0);
+    printf("line(44), tid:(%d), &a:(%d)\n", thread_self(), &a);
 //    printf("[wrapper:25]\t ready thread arg : %d\n", pArg->funcArg);
 	void* funcPtr = pArg->funcPtr;
 	void* funcArg = pArg->funcArg;
+//    printf("[test]\t funcPtf : (%d), funcArg : (%d)\n", funcPtr, funcArg); 
 //    printf("@@@@@@@@@@@@@@@@ recheck arg %d @@@@@@@@@@@@@@@@\n",funcArg);
-    printf("[wrapper:25]\t start thread id : (%d)\n\t\t start thread arg : %d\n", (int)thread_self(), pArg->funcArg);
-    
+//    printf("[wrapper:25]\t start thread id : (%d)\n\t\t start thread arg : %d\n", (int)thread_self(), pArg->funcArg);
+//    printf("%d\n",((WrapperArg*)arg)->funcArg);
 	ret = (*(void*(*)(void*))funcPtr)(funcArg);
+//	ret = (*(void*(*)(void*))(((WrapperArg*)arg)->funcPtr))((((WrapperArg*)arg)->funcArg));
 	return ret;
 }
 
@@ -45,7 +59,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	// pthread_create
 //    printf("[th_create:38]\t pthread_create()\n");
     WrapperArg wrapperArg;
-    printf("&wrapperArg : (%d)\n", &(wrapperArg.funcArg));
+//    printf("&wrapperArg : (%d)\n", &(wrapperArg.funcArg));
 	wrapperArg.funcPtr = start_routine;
 	wrapperArg.funcArg = arg;
 //    printf("@@@@@@@@@@@@@@@@ input arg %d @@@@@@@@@@@@@@@@\n",wrapperArg.funcArg);
@@ -55,7 +69,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
     }
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
 //    printf("[th_create:43]\t pthread_create tid : %d\n\t\t pthread_self : %d\n", *thread, pthread_self());
-    usleep(1);
+    sleep(1);
 //    sleep(1);
 	// Allocate & Init TCB
 //    printf("[th_create:46]\t Allocate & Init TCB\n");
