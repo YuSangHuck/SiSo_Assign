@@ -1,0 +1,14 @@
+a : Common.o Init.o Queue.o Thread.o a.o
+	gcc -g -o a Common.o Init.o Queue.o Thread.o a.o -lpthread
+a.o : a.c
+	gcc -g -c a.c
+Thread.o : Thread.c Thread.o
+	gcc -g -c Thread.c
+Queue.o : Queue.c Queue.h
+	gcc -g -c Queue.c
+Init.o : Init.c Init.h Thread.c
+	gcc -g -c Init.c Thread.c 
+Common.o : Common.c Common.h
+	gcc -g -c Common.c
+clean :
+	rm -rf *.o
