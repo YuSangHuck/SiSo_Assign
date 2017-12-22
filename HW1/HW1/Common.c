@@ -8,7 +8,7 @@ void __thread_wait_handler(int signo) {
 	Thread* pTh;
 	if((pTh=SearchTCB(ReadyQ,thread_self())) == NULL){
         printf("SearchTCB error\n");
-        return;
+		exit(0);
     }
 
     pthread_mutex_lock(&(pTh->readyMutex));

@@ -101,8 +101,9 @@ Thread* Dequeue(Queue* queue) {
 		WaitQTail = queue->rear;
 	}
 	else {
-		temp = (Thread*)malloc(sizeof(Thread));
-		temp->tid = -2;
+		/*temp = (Thread*)malloc(sizeof(Thread));
+		temp->tid = -2;*/
+		temp = NULL;
 	}
 	queue->count -= 1;
 	return temp;
