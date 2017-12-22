@@ -41,7 +41,7 @@ void main(int argc, char* argv[]) {
 		break;
 
 	}
-//    printf("[main:41]\t RunScheduler()\n");
+    printf("[main:41]\t RunScheduler()\n");
     RunScheduler();
 	while (1) {}
 }

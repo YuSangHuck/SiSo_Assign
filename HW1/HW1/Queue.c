@@ -115,8 +115,9 @@ Thread* SearchTCB(Queue* queue, thread_t tid) {
 			return cursor;
 		cursor = cursor->pNext;
 	}
-	cursor = (Thread*)malloc(sizeof(Thread));
-	cursor->tid = -1;
+//	cursor = (Thread*)malloc(sizeof(Thread));
+//	cursor->tid = -1;
+    cursor = NULL;
 	return cursor;
 }
 
@@ -140,6 +141,19 @@ void ShowQueue(Queue* queue){
             printf("\t\t%-9d\n", cursor);
         else
             printf("\n");
+		cursor = cursor->pNext;
+	}
+    printf("\n");
+	return ;
+}
+
+void ShowQueueBRunnable(Queue* queue){
+	Thread* cursor = queue->front;
+
+    printf("@Queue bRunnable\n");
+    printf("tid\t\tbRunnable\n");
+	while (cursor != NULL) {
+        printf("%-9d\t%-9d\n", cursor->tid, cursor->bRunnable);
 		cursor = cursor->pNext;
 	}
     printf("\n");

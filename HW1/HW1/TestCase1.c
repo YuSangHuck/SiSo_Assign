@@ -14,7 +14,7 @@ void* Tc1ThreadProc(void* param)
 	{
 		/* sleep for 1 seconds */
 		sleep(1);
-		printf("Tc1ThreadProc: my thread id (%d), arg is (%d)\n", (int)tid, *((int*)param));
+		printf("Tc1ThreadProc: my thread id (%d), arg is (%d), count is (%d)\n", (int)tid, *((int*)param), count);
 		count--;
 	}
 	retVal = (int*)param;
@@ -32,11 +32,15 @@ void TestCase1(void)
 //    printf("TestCase1 start, tid:(%d)\n", thread_self());
 	thread_t tid[TOTAL_THREAD_NUM];
     int i1 = 1, i2 = 2, i3 = 3, i4 = 4, i5 = 5;
-
+    printf("thread creating1...\n");
 	thread_create(&tid[0], NULL, (void*)Tc1ThreadProc, (void*)&i1);
+    printf("thread creating2...\n");
 	thread_create(&tid[1], NULL, (void*)Tc1ThreadProc, (void*)&i2);
+    printf("thread creating3...\n");
 	thread_create(&tid[2], NULL, (void*)Tc1ThreadProc, (void*)&i3);
+    printf("thread creating4...\n");
 	thread_create(&tid[3], NULL, (void*)Tc1ThreadProc, (void*)&i4);
+    printf("thread creating5...\n");
 	thread_create(&tid[4], NULL, (void*)Tc1ThreadProc, (void*)&i5);
     
     while (1) {}

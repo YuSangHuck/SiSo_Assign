@@ -22,14 +22,18 @@ void* __wrapperFunc(void* arg) {
     sigset_t set;
 	sigemptyset(&set);
 	sigaddset(&set, SIGUSR1);
+    printf(" pthread(%d) wait signal\n",pthread_self());
 	sigwait(&set, &retSig);
+    printf(" pthread(%d) pass sigwait\n",pthread_self());
 
 	__thread_wait_handler(0);
     void* funcPtr = myArg.funcPtr;
     void* funcArg = myArg.funcArg;
 //	void* funcPtr = pArg->funcPtr;
 //	void* funcArg = pArg->funcArg;
+    printf(" wrapperFunc start\n");
     ret = (*(void*(*)(void*))funcPtr)(funcArg);
+    printf(" wrapperFunc finish\n");
 	return ret;
 }
 
@@ -41,14 +45,13 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 //    printf("&wrapperArg : (%d)\n", &(wrapperArg));
 	wrapperArg.funcPtr = start_routine;
 	wrapperArg.funcArg = arg;
-    if(arg == 0){
-        pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
-        return 0;
-    }
+//    if(arg == 0){
+//        pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
+//        return 0;
+//    }
 //    printf("(%d)\n",*(int*)arg);
 //    printf("(%d)\n",*(int*)wrapperArg.funcArg);
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
-    usleep(100);
 	// Allocate & Init TCB
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
 	pthread_cond_t readyCond = PTHREAD_COND_INITIALIZER;
@@ -68,7 +71,11 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 
 	// send SIGUSR1 to child
 //    printf("signal\n");
+    usleep(100);
+//    int t = 0;
+//    while(t++<100000);
     pthread_kill(*thread, SIGUSR1);
+    printf(" signal to pthread(%d)\n",*thread);
 	// Return
 //	printf("thread_create finish at (%d)\n", thread_self());
 }
