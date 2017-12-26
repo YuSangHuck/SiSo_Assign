@@ -56,7 +56,8 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
 	pthread_cond_t readyCond = PTHREAD_COND_INITIALIZER;
 	pthread_mutex_t readyMutex = PTHREAD_MUTEX_INITIALIZER;
-	threadPtr->status = THREAD_STATUS_BLOCKED;
+	//threadPtr->status = THREAD_STATUS_BLOCKED;
+	threadPtr->status = THREAD_STATUS_READY;
 	threadPtr->pExitCode = 0;
 	threadPtr->bRunnable = 0;
 	threadPtr->pPrev = NULL;

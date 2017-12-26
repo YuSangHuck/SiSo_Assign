@@ -27,6 +27,7 @@ typedef struct _Thread {
 	pthread_t parentTid;
 	Thread* pPrev;
 	Thread* pNext;
+	long type;
 } Thread;
 
 typedef struct __wrapperArg {
