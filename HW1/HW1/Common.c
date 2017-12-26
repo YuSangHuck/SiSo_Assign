@@ -26,5 +26,6 @@ void __thread_wakeup(Thread* thread) {
 	thread->bRunnable = 1;
 	pthread_cond_signal(&(thread->readyCond));
 	pthread_mutex_unlock(&(thread->readyMutex));
+    printf("wakeup called at %d\n", thread->tid);
 }
 

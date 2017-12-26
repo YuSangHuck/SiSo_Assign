@@ -4,6 +4,7 @@
 #include "Queue.h"
 #include "Scheduler.h"
 #include "Thread.h"
+#include <signal.h>
 
 int myIndex;
 Thread* runningThread;
