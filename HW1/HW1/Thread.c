@@ -14,7 +14,6 @@ void* __wrapperFunc(void* arg) {
     WrapperArg* pArg = (WrapperArg*)arg;
     WrapperArg myArg = *pArg;
 
-//    printf("&wrapperArg : (%d)\n", arg);
 //    printf("tid : (%d)\t arg : (%d)\n\
 \t\t\t (WrapperArg*)arg : (%d)\n\
 \t\t\t ((WrapperArg*)arg)->funcArg : (%d)\n\
@@ -22,18 +21,19 @@ void* __wrapperFunc(void* arg) {
     sigset_t set;
 	sigemptyset(&set);
 	sigaddset(&set, SIGUSR1);
-    printf(" pthread(%d) wait signal\n",pthread_self());
+//    printf(" pthread(%d) wait signal\n",pthread_self());
 	sigwait(&set, &retSig);
-    printf(" pthread(%d) pass sigwait\n",pthread_self());
+
+//    printf(" pthread(%d) pass sigwait\n",pthread_self());
 
 	__thread_wait_handler(0);
     void* funcPtr = myArg.funcPtr;
     void* funcArg = myArg.funcArg;
 //	void* funcPtr = pArg->funcPtr;
 //	void* funcArg = pArg->funcArg;
-    printf(" wrapperFunc start\n");
+//    printf(" wrapperFunc start\n");
     ret = (*(void*(*)(void*))funcPtr)(funcArg);
-    printf(" wrapperFunc finish\n");
+//    printf(" wrapperFunc finish\n");
 	return ret;
 }
 
@@ -45,10 +45,10 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 //    printf("&wrapperArg : (%d)\n", &(wrapperArg));
 	wrapperArg.funcPtr = start_routine;
 	wrapperArg.funcArg = arg;
-//    if(arg == 0){
-//        pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
-//        return 0;
-//    }
+    if(arg == 0){
+        pthread_create(thread, NULL, wrapperArg.funcPtr, wrapperArg.funcArg);
+        return 0;
+    }
 //    printf("(%d)\n",*(int*)arg);
 //    printf("(%d)\n",*(int*)wrapperArg.funcArg);
 	pthread_create(thread, NULL, __wrapperFunc, &wrapperArg);
@@ -56,7 +56,7 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 	Thread* threadPtr = (Thread*)malloc(sizeof(Thread));
 	pthread_cond_t readyCond = PTHREAD_COND_INITIALIZER;
 	pthread_mutex_t readyMutex = PTHREAD_MUTEX_INITIALIZER;
-	threadPtr->status = THREAD_STATUS_READY;
+	threadPtr->status = THREAD_STATUS_BLOCKED;
 	threadPtr->pExitCode = 0;
 	threadPtr->bRunnable = 0;
 	threadPtr->pPrev = NULL;
@@ -71,11 +71,11 @@ int thread_create(thread_t *thread, thread_attr_t *attr, void *(*start_routine) 
 
 	// send SIGUSR1 to child
 //    printf("signal\n");
-    usleep(100);
+    usleep(1);
 //    int t = 0;
 //    while(t++<100000);
     pthread_kill(*thread, SIGUSR1);
-    printf(" signal to pthread(%d)\n",*thread);
+//    printf(" signal to pthread(%d)\n",*thread);
 	// Return
 //	printf("thread_create finish at (%d)\n", thread_self());
 }

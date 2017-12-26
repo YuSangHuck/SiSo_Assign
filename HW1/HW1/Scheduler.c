@@ -6,9 +6,9 @@
 #include "signal.h"
 
 int	RunScheduler(void) {
-    printf("[Scheduler:9]\t Start\n");
+//    printf("[Scheduler:9]\t Start\n");
     while (1) {
-        printf("[Scheduler:15]\t # of ReadyQ is (%d)\n", ReadyQ->count);
+//        printf("[Scheduler:15]\t # of ReadyQ is (%d)\n", ReadyQ->count);
 		if (IsQEmpty(ReadyQ)){
         }
 		else {
@@ -20,22 +20,27 @@ int	RunScheduler(void) {
 }
 
 void __ContextSwitch(Thread* pCurThread, Thread* pNewThread) {
-    printf("start\n");
+//    printf("start\n");
 	// 1.stop current running thread
     //pthread_kill(runningThread->tid,)
     if(pCurThread->tid != 0){
-        printf("check\n");
+//        printf("check\n");
     	//_thread_wait_handler(pCurThread);
         pthread_kill(pCurThread->tid, SIGUSR2);
+        pCurThread->status = THREAD_STATUS_READY;
 	// 2.enqueue
 //        printf("enqueue TCB check bRunnable(%d)\n", pCurThread->bRunnable);
 		Enqueue(ReadyQ, pCurThread);
     }
 	
 	// 3.dequeue target thread & execute target thread
-    printf("check2\n");
+//    printf("check2\n");
     Dequeue(ReadyQ);
     runningThread = pNewThread;
+//    if(runningThread->status == THREAD_STATUS_BLOCKED){
+//        pthread_kill(pNewThread->tid, SIGUSR1);
+//    }
     __thread_wakeup(pNewThread);
+    runningThread->status = THREAD_STATUS_RUN;
 }
 
