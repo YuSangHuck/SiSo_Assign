@@ -21,6 +21,7 @@ void __thread_wait_handler(int signo) {
 
 void __thread_wakeup(Thread* thread) {
 //    printf("__thread_wakeup start, tid : (%d)\n", thread->tid);
+	pthread_kill(thread->tid, SIGUSR1);
 	pthread_mutex_lock(&(thread->readyMutex));
 	thread->bRunnable = 1;
 	pthread_cond_signal(&(thread->readyCond));
